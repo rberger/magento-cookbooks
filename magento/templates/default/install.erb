@@ -1,0 +1,25 @@
+#!/bin/bash
+php -f <%= @mage_dir %>/install.php -- \
+--license_agreement_accepted "yes" \
+--locale "en_US" \
+--timezone "Europe/Berlin" \
+--default_currency "EURO" \
+--db_host "localhost" \
+--db_name "<%= @database %>" \
+--db_user "<%= @user %>" \
+--db_pass "<%= @password %>" \
+--db_prefix "" \
+--session_save "files" \
+--admin_frontname "backend" \
+--url "http://<%= @server_name %>/" \
+--skip_url_validation \
+--use_rewrites "yes" \
+--use_secure "no" \
+--secure_base_url "https://<%= @server_name %>/" \
+--use_secure_admin "no" \
+--admin_firstname "Toni" \
+--admin_lastname "Grigoriu" \
+--admin_email "toni@grigoriu.ro" \
+--admin_username "admin" \
+--admin_password "admin1234" \
+--encryption_key "<%= @enc_key %>"

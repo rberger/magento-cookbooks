@@ -1,0 +1,132 @@
+{
+  "name": "magento",
+  "description": "Installs/Configures Magento CE",
+  "long_description": "= DESCRIPTION:\n\nInstalls and configures Magento\n"
+  "maintainer": "Toni Grigoriu",
+  "maintainer_email": "toni@grigoriu.ro",
+  "license": "Apache 2.0",
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "dependencies": {
+    "php": [
+
+    ],
+    "apache2": [
+
+    ],
+    "mysql": [
+
+    ],
+    "openssl": [
+
+    ]
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+    "magento/version": {
+      "display_name": "Magento download version",
+      "description": "Version of Magento to download from the Magento Commerce site.",
+      "default": "1.5.0.1",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "magento/checksum": {
+      "display_name": "Magento tarball checksum",
+      "description": "Checksum of the tarball for the version specified.",
+      "default": "ccd7eb97858b9985781a71311c6994b4e1282a5b",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "magento/dir": {
+      "display_name": "Magento installation directory",
+      "description": "Location to place magento files.",
+      "default": "/var/www/magento",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "magento/db/database": {
+      "display_name": "Magento MySQL database",
+      "description": "Magento will use this MySQL database to store its data.",
+      "default": "magento",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "magento/db/user": {
+      "display_name": "Magento MySQL user",
+      "description": "Magento will connect to MySQL using this user.",
+      "default": "root",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "magento/db/password": {
+      "display_name": "Magento MySQL password",
+      "description": "Password for the Magento MySQL user.",
+      "default": "randomly generated",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "magento": "Installs and configures Magento LAMP stack on a single system"
+  },
+  "version": "0.7.2"
+}

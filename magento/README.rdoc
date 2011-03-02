@@ -1,0 +1,66 @@
+= DESCRIPTION:
+
+Installs and configures Magento CE.
+
+= REQUIREMENTS:
+
+== Platform:
+
+Tested on Ubuntu 10.10.
+
+== Cookbooks:
+
+Opscode cookbooks, http://github.com/opscode/cookbooks/tree/master:
+
+* mysql
+* php
+* apache2
+* opensssl
+
+== Libraries:
+
+The openssl library is required from the openssl cookbook to generate secure passwords.
+
+= ATTRIBUTES:
+
+* magento[:version] - Set the version to download.
+* magento[:checksum] - sha256sum of the tarball, make sure this matches for the version!
+* magento[:dir] - Set the location to place magento files. Default is /var/www.
+* magento[:db][:database] - Magento will use this MySQL database to store its data.
+* magento[:db][:user] - Magento will connect to MySQL using this user.
+* magento[:db][:password] - Password for the Magento MySQL user. The default is a randomly generated string.
+
+The random generation is handled with the secure_password method in the openssl cookbook which is a cryptographically secure random generator and not predictable like the random method in the ruby standard library.
+
+= USAGE:
+
+If a different version than the default is desired, download that version and get the SHA256 checksum (sha256sum on Linux systems), and set the version and checksum attributes.
+
+Add the "magento" recipe to your node's run list or role, or include the recipe in another cookbook.
+
+The mysql::server recipe needs to come first, and contain an execute resource to install mysql privileges from the grants.sql template in this cookbook.
+
+= LICENSE and AUTHOR:
+This cookbook is based on the Opscode' Wordpress cookbook, https://github.com/opscode/cookbooks/tree/master/wordpress
+Author:: Toni Grigoriu (toni@grigoriu.ro)
+
+Copyright:: 2011, Toni Grigoriu
+
+
+Wordpress cookbook:
+
+Author:: Barry Steinglass (barry@opscode.com>)
+
+Copyright:: 2010, Opscode, Inc
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
