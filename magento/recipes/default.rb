@@ -93,7 +93,7 @@ end
 
 
 ### PHP ###
-include_recipe %w{php::php5 php::module_mysql php::module_curl php::module_mcrypt}
+include_recipe %w{php::php5 php::module_apc php::module_curl php::module_mcrypt}
 
 execute "magento-install" do
   command "#{Chef::Config[:file_cache_path]}/install"
