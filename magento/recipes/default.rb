@@ -2,8 +2,9 @@
 # Cookbook Name:: magento
 # Recipe:: default
 #
-# Based on original code from https://github.com/opscode/cookbooks/tree/master/wordpress
+# Copyright 2011, Toni Grigoriu
 #
+# Based on original code from https://github.com/opscode/cookbooks/tree/master/wordpress
 # Copyright 2009-2010, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,6 +30,10 @@ else
   server_fqdn = node.fqdn
 end
 
+if node.has_key?("http_host_port")
+  server_fqdn = "#{server_fqdn}:#{node.http_host_port}"
+end
+
 remote_file "#{Chef::Config[:file_cache_path]}/magento-#{node[:magento][:version]}.tar.gz" do
   checksum node[:magento][:checksum]
   source "http://www.magentocommerce.com/downloads/assets/#{node[:magento][:version]}/magento-#{node[:magento][:version]}.tar.gz"
@@ -36,16 +41,17 @@ remote_file "#{Chef::Config[:file_cache_path]}/magento-#{node[:magento][:version
 end
 
 directory "#{node[:magento][:dir]}" do
-  owner "root"
-  group "root"
+  owner "vagrant"
+  group "vagrant"
   mode "0755"
   action :create
+  not_if {File.exists?("#{node[:magento][:dir]}/app/etc/local.xml")}
 end
 
 execute "untar-magento" do
   cwd node[:magento][:dir]
-  command "tar --strip-components 1 -xzf #{Chef::Config[:file_cache_path]}/wordpress-#{node[:magento][:version]}.tar.gz"
-  #creates "#{node[:wordpress][:dir]}/wp-settings.php"
+  command "tar --strip-components 1 -xzf #{Chef::Config[:file_cache_path]}/magento-#{node[:magento][:version]}.tar.gz"
+  not_if {File.exists?("#{node[:magento][:dir]}/app/etc/local.xml")}
 end
 
 execute "mysql-install-magento-privileges" do
@@ -72,6 +78,7 @@ template "/etc/mysql/magento-grants.sql" do
     :database => node[:magento][:db][:database]
   )
   notifies :run, resources(:execute => "mysql-install-magento-privileges"), :immediately
+  not_if {File.exists?("#{node[:magento][:dir]}/app/etc/local.xml")}
 end
 
 execute "create #{node[:magento][:db][:database]} database" do
@@ -80,15 +87,7 @@ execute "create #{node[:magento][:db][:database]} database" do
     m = Mysql.new("localhost", "root", node[:mysql][:server_root_password])
     m.list_dbs.include?(node[:magento][:db][:database])
   end
-end
-
-# save node data after writing the MYSQL root password, so that a failed chef-client run that gets 
-# this far doesn't cause an unknown password to get applied to the box without being saved in the node data.
-ruby_block "save node data" do
-  block do
-    node.save
-  end
-  action :create
+  not_if {File.exists?("#{node[:magento][:dir]}/app/etc/local.xml")}
 end
 
 
@@ -98,8 +97,10 @@ include_recipe %w{php::php5 php::module_apc php::module_curl php::module_mcrypt}
 execute "magento-install" do
   command "#{Chef::Config[:file_cache_path]}/install"
   action :nothing
+  not_if {File.exists?("#{node[:magento][:dir]}/app/etc/local.xml")}
 end
 
+# run the magento install
 template "#{Chef::Config[:file_cache_path]}/install" do
   source "install.erb"
   owner "root"
@@ -109,13 +110,31 @@ template "#{Chef::Config[:file_cache_path]}/install" do
     :mage_dir        => node[:magento][:dir],
     :database        => node[:magento][:db][:database],
     :user            => node[:magento][:db][:user],
-    :password        => node[:magenito][:db][:password],
+    :password        => node[:magento][:db][:password],
     :server_name     => server_fqdn,
     :enc_key         => node[:magento][:enc_key]
   )
   notifies :run, resources(:execute => "magento-install"), :immediately
 end
 
+# set required magento directory permissions
+bash "set_magento_permissions" do
+  user "root"
+    cwd node[:magento][:dir]
+    code <<-EOH
+      chown -R vagrant.vagrant *
+      chown -R www-data:www-data var media app/etc/local.xml
+      chmod 600 app/etc/local.xml
+    EOH
+end
+
+# disable default virtual host
+execute "disable-default-site" do
+  command "sudo a2dissite default"
+  notifies :reload, resources(:service => "apache2"), :delayed
+end
+
+# set up the magento app virtual host
 web_app "magento" do
   template "magento.conf.erb"
   docroot "#{node[:magento][:dir]}"

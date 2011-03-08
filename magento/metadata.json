@@ -1,10 +1,134 @@
 {
-  "name": "magento",
-  "description": "Installs/Configures Magento CE",
-  "long_description": "= DESCRIPTION:\n\nInstalls and configures Magento\n"
-  "maintainer": "Toni Grigoriu",
-  "maintainer_email": "toni@grigoriu.ro",
+  "suggestions": {
+  },
   "license": "Apache 2.0",
+  "long_description": "= DESCRIPTION:\n\nInstalls and configures Magento CE.\n\n= REQUIREMENTS:\n\n== Platform:\n\nTested on Ubuntu 10.10.\n\n== Cookbooks:\n\nOpscode cookbooks, http://github.com/opscode/cookbooks/tree/master:\n\n* mysql\n* php\n* apache2\n* opensssl\n\n== Libraries:\n\nThe openssl library is required from the openssl cookbook to generate secure passwords.\n\n= ATTRIBUTES:\n\n* magento[:version] - Set the version to download.\n* magento[:checksum] - sha256sum of the tarball, make sure this matches for the version!\n* magento[:dir] - Set the location to place magento files. Default is /var/www.\n* magento[:db][:database] - Magento will use this MySQL database to store its data.\n* magento[:db][:user] - Magento will connect to MySQL using this user.\n* magento[:db][:password] - Password for the Magento MySQL user. The default is a randomly generated string.\n\nThe random generation is handled with the secure_password method in the openssl cookbook which is a cryptographically secure random generator and not predictable like the random method in the ruby standard library.\n\n= USAGE:\n\nIf a different version than the default is desired, download that version and get the SHA256 checksum (sha256sum on Linux systems), and set the version and checksum attributes.\n\nAdd the \"magento\" recipe to your node's run list or role, or include the recipe in another cookbook.\n\nThe mysql::server recipe needs to come first, and contain an execute resource to install mysql privileges from the grants.sql template in this cookbook.\n\n= LICENSE and AUTHOR:\nThis cookbook is based on the Opscode' Wordpress cookbook, https://github.com/opscode/cookbooks/tree/master/wordpress\nAuthor:: Toni Grigoriu (toni@grigoriu.ro)\n\nCopyright:: 2011, Toni Grigoriu\n\n\nWordpress cookbook:\n\nAuthor:: Barry Steinglass (barry@opscode.com>)\n\nCopyright:: 2010, Opscode, Inc\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "description": "Installs/Configures Magento",
+  "version": "0.7.2",
+  "recipes": {
+    "magento": "Installs and configures Magento LAMP stack on a single system"
+  },
+  "maintainer": "Toni Grigoriu",
+  "attributes": {
+    "magento/dir": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "/var/www/magento",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento installation directory",
+      "description": "Location to place magento files."
+    },
+    "magento/db/password": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "randomly generated",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento MySQL password",
+      "description": "Password for the Magento MySQL user."
+    },
+    "magento/db/database": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "magento",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento MySQL database",
+      "description": "Magento will use this MySQL database to store its data."
+    },
+    "magento/version": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "1.5.0.1",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento download version",
+      "description": "Version of Magento to download from the Magento site."
+    },
+    "magento/keys/enc": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "randomly generated",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento encryption key",
+      "description": "Magento encryption key."
+    },
+    "magento/checksum": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "eb173239211e450e16a20dbc1a6f1e95ab2bda77644252ab531d26174a26b347",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento tarball checksum",
+      "description": "Checksum of the tarball for the version specified."
+    },
+    "magento/db/user": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "root",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "display_name": "Magento MySQL user",
+      "description": "Magento will connect to MySQL using this user."
+    }
+  },
+  "replacing": {
+  },
+  "dependencies": {
+    "mysql": [
+
+    ],
+    "php": [
+
+    ],
+    "openssl": [
+
+    ],
+    "apache2": [
+
+    ]
+  },
   "platforms": {
     "debian": [
 
@@ -13,120 +137,10 @@
 
     ]
   },
-  "dependencies": {
-    "php": [
-
-    ],
-    "apache2": [
-
-    ],
-    "mysql": [
-
-    ],
-    "openssl": [
-
-    ]
-  },
-  "recommendations": {
-  },
-  "suggestions": {
-  },
-  "conflicting": {
-  },
-  "providing": {
-  },
-  "replacing": {
-  },
-  "attributes": {
-    "magento/version": {
-      "display_name": "Magento download version",
-      "description": "Version of Magento to download from the Magento Commerce site.",
-      "default": "1.5.0.1",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-    "magento/checksum": {
-      "display_name": "Magento tarball checksum",
-      "description": "Checksum of the tarball for the version specified.",
-      "default": "ccd7eb97858b9985781a71311c6994b4e1282a5b",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-    "magento/dir": {
-      "display_name": "Magento installation directory",
-      "description": "Location to place magento files.",
-      "default": "/var/www/magento",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-    "magento/db/database": {
-      "display_name": "Magento MySQL database",
-      "description": "Magento will use this MySQL database to store its data.",
-      "default": "magento",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-    "magento/db/user": {
-      "display_name": "Magento MySQL user",
-      "description": "Magento will connect to MySQL using this user.",
-      "default": "root",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-    "magento/db/password": {
-      "display_name": "Magento MySQL password",
-      "description": "Password for the Magento MySQL user.",
-      "default": "randomly generated",
-      "choice": [
-
-      ],
-      "calculated": false,
-      "type": "string",
-      "required": "optional",
-      "recipes": [
-
-      ]
-    },
-  },
+  "maintainer_email": "toni@grigoriu.ro",
+  "name": "magento",
   "groupings": {
   },
-  "recipes": {
-    "magento": "Installs and configures Magento LAMP stack on a single system"
-  },
-  "version": "0.7.2"
+  "recommendations": {
+  }
 }

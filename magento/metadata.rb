@@ -28,7 +28,7 @@ attribute "magento/checksum",
 attribute "magento/dir",
   :display_name => "Magento installation directory",
   :description => "Location to place magento files.",
-  :default => "/var/www/magento"
+  :default => "/var/www"
   
 attribute "magento/db/database",
   :display_name => "Magento MySQL database",

@@ -5,22 +5,15 @@
 
   <Directory <%= @params[:docroot] %>>
     Options FollowSymLinks
-    AllowOverride None
+    AllowOverride All
     Order allow,deny
     Allow from all
   </Directory>
-
-  <Directory />
-    Options FollowSymLinks
-    AllowOverride None
-  </Directory>
+ 
+  # Set Magento dev mode on
+  SetEnv MAGE_IS_DEVELOPER_MODE 1  
 
   LogLevel info
   ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
-
-  RewriteEngine On
-  RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
-  RewriteLogLevel 0
-
 </VirtualHost>
