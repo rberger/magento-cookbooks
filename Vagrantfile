@@ -1,9 +1,12 @@
 Vagrant::Config.run do |config|
   config.vm.box = "maverick32"
+
+  # Debug
+  #config.vm.boot_mode = :gui
   
   config.vm.customize do |vm|
     vm.memory_size = 512
-    vm.name = "Magento"
+    vm.name = "Magento Dev"
   end
  
   # Enable host-only networking, see http://vagrantup.com/docs/host_only_networking.html
@@ -33,6 +36,7 @@ Vagrant::Config.run do |config|
       }
     })
 
+    # Debug
     #chef.log_level = :debug
   end
 end
