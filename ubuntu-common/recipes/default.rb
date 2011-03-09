@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: apt
+# Author::  Toni Grigoriu (<toni@grigoriu.ro>)
+# Cookbook Name:: ubuntu-common
 # Recipe:: default
 #
-# Copyright 2008-2009, Opscode, Inc.
+# Copyright 2011, Toni Grigoriu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

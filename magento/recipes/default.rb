@@ -1,4 +1,5 @@
 #
+# Author::  Toni Grigoriu (<toni@grigoriu.ro>)
 # Cookbook Name:: magento
 # Recipe:: default
 #
