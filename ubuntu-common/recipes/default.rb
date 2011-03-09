@@ -18,10 +18,10 @@
 #
 
 include_recipe "ubuntu"
-include_recipe "git"
 include_recipe "nfs::server"
-include_recipe "vim"
 
+package "vim"
+package "git"
 package "ack-grep"
 package "htop"
 
