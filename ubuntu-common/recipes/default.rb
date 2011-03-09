@@ -21,7 +21,7 @@ include_recipe "ubuntu"
 include_recipe "nfs::server"
 
 package "vim"
-package "git"
+package "git-core"
 package "ack-grep"
 package "htop"
 
