@@ -122,7 +122,7 @@ bash "set_magento_permissions" do
   user "root"
     cwd node[:magento][:dir]
     code <<-EOH
-      chown -R vagrant.vagrant ../
+      chown -R vagrant.vagrant /var/www
       chown -R www-data:www-data var media app/etc/local.xml
       chmod 600 app/etc/local.xml
     EOH
