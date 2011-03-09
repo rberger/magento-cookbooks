@@ -16,6 +16,7 @@ Vagrant::Config.run do |config|
 
   # Enable provisioning with chef solo
   config.vm.provision :chef_solo do |chef|
+    #chef.recipe_url = "http://cloud.github.com/downloads/tonigrigoriu/magento-cookbooks/cookbooks.tgz"
     chef.cookbooks_path = "."
     chef.add_recipe("ubuntu-common")
     chef.add_recipe("magento");
