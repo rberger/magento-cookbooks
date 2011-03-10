@@ -1,6 +1,6 @@
 #
 # Author::  Toni Grigoriu (<toni@grigoriu.ro>)
-# Cookbook Name:: ubuntu-common
+# Cookbook Name:: vagrant-main
 # Recipe:: default
 #
 # Copyright 2011, Toni Grigoriu
@@ -20,6 +20,9 @@
 
 include_recipe "ubuntu"
 include_recipe "nfs::server"
+include_recipe "magento"
+include_recipe "modman"
+include_recipe "magetool"
 
 package "vim"
 package "git-core"
