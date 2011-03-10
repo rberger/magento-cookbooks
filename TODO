@@ -1,3 +1,4 @@
 * add modman recipe
 * add mage-tools recipe
 * add option to install sample data
+* add option to deploy custom code in modman directory
