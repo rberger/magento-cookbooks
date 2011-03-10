@@ -1,0 +1,7 @@
+maintainer        "Toni Grigoriu"
+maintainer_email  "toni@grigoriu.ro"
+license           "Apache 2.0"
+description       "Install MageTool"
+version           "1.0.0"
+recipe            "magetool", "Install MageTool, see https://github.com/alistairstead/MageTool"
+depends           "php"
