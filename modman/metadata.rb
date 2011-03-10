@@ -1,0 +1,6 @@
+maintainer        "Toni Grigoriu"
+maintainer_email  "toni@grigoriu.ro"
+license           "Apache 2.0"
+description       "Install modman"
+version           "1.0.0"
+recipe            "modman", "Install modman, see http://module-manager.googlecode.com"
