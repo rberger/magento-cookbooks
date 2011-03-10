@@ -18,8 +18,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     #chef.recipe_url = "http://cloud.github.com/downloads/tonigrigoriu/magento-cookbooks/cookbooks.tgz"
     chef.cookbooks_path = "."
-    chef.add_recipe("ubuntu-common")
-    chef.add_recipe("magento");
+    chef.add_recipe("vagrant-main")
     
     chef.json.merge!({
       :mysql => {
